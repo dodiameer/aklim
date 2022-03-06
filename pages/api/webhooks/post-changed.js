@@ -24,6 +24,7 @@ export default async function handler(req, res) {
     } = req;
 
     await res.unstable_revalidate(`/posts/${slug}`);
+    await res.unstable_revalidate("/");
     return res.json({
       message: `Revalidated post with slug "${slug}"`,
     });
