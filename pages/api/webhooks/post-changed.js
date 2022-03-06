@@ -20,18 +20,13 @@ export default async function handler(req, res) {
 
   try {
     const {
-      body: { type, slug },
+      body: { slug },
     } = req;
 
-    switch (type) {
-      case "post":
-        await res.unstable_revalidate(`/posts/${slug}`);
-        return res.json({
-          message: `Revalidated "${type}" with slug "${slug}"`,
-        });
-    }
-
-    return res.json({ message: "No managed type" });
+    await res.unstable_revalidate(`/posts/${slug}`);
+    return res.json({
+      message: `Revalidated post with slug "${slug}"`,
+    });
   } catch (err) {
     return res.status(500).send({ message: "Error revalidating" });
   }
